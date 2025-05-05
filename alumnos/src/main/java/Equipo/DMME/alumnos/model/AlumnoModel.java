@@ -2,7 +2,7 @@ package Equipo.DMME.alumnos.model;
 
 import jakarta.persistence.Entity;
 
-@Entity
+0
 public class AlumnoModel {
 
     private Long id;
