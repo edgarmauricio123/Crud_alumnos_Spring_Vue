@@ -2,11 +2,11 @@ package Equipo.DMME.alumnos.model;
 
 import jakarta.persistence.Entity;
 
-0
+@Entity
 public class AlumnoModel {
 
     private Long id;
-    private  String Nume roControl;
+    private  String NumeroControl;
     private String nombre;
     private String apellido;
     private String telefono;
