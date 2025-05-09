@@ -56,10 +56,12 @@ onMounted(cargarAlumnos);
         </div>
       </div>
 
-      <div class="cold-md-2">
-        <h2>Tabla de alumnos </h2>
-        <table class="table">
-          <thead>
+      <div class="cold-md-12">
+        <div class="card shadow">
+          <div class="card body">
+            <h5 class="card-title mb-3">Tabla de alumnos</h5>
+            <table class="table table-hover align-middle">
+          <thead class="table-light">
             <tr>
               <th scope="col"> Id</th>
               <th scope="col">Nombre</th>
@@ -70,7 +72,7 @@ onMounted(cargarAlumnos);
               <th scope="col">Acciones</th>
 
             </tr>
-          </thead>
+          </thead>  
           <tbody>
             <tr v-for="alumno in alumnos" :key="alumno.Id">
               <td>{{ alumno.Id }}</td>
@@ -79,11 +81,15 @@ onMounted(cargarAlumnos);
               <td>{{ alumno.Carrera }}</td>
               <td>{{ alumno.Telefono }}</td>
               <td><img :src="alumno.Imagen" alt="Imagen de Alumno" width="50"></td>
-              <td><button class="btn btn-danger">Eliminar</button></td>
+              <td><button class="btn btn-danger mx-2"><i class="bi bi-trash2"></i></button></td>
+              <td><button class="btn btn-warning"><i class="bi bi-pencil-fill"></i></button></td>
 
             </tr>
           </tbody>
         </table>
+          </div>
+        </div>
+        
       </div>
     </div>
 
