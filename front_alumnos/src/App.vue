@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
-
+import swal from 'sweetalert2';
 const alumnos = ref([]);
 const nuevoAlumno = ref({
   nombre: '',
@@ -24,7 +24,11 @@ const agregarAlumno = async () => {
     // editado.value = false
   } else {
     await axios.post('http://localhost:8080/alumnos/insertar-alumnos', nuevoAlumno.value)
-
+    swal.fire({
+      icon: 'success',
+      title: 'Alumno agregado correctamente',
+      timer: 1500
+    });
   }
   await cargarAlumnos();
   nuevoAlumno.value = {
@@ -42,15 +46,52 @@ const editarAlumnos = (alumno) => {
 }
 
 const eliminarAlumno = async (id) => {
-  await // Si el ID se pasa en la URL
-    axios.delete(`http://localhost:8080/alumnos/eliminar-alumno/${id}`);
-  console.log('Alumno eliminado con id:', id);
 
-  await cargarAlumnos();
+  swal.fire({
+    title: '¿Estas seguro de eliminar el alumno?',
+    text: "No podrás revertir esto!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, eliminarlo!'
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      await eliminarAlumnoPorId(id);
+      swal.fire(
+        'Eliminado!',
+        'El alumno ha sido eliminado.',
+        'success'
+      )
+    }
+  })
+
 }
 
+const eliminarAlumnoPorId = async (id) => {
+  try {
+    await axios.delete(`http://localhost:8080/alumnos/eliminar-alumno/${id}`);
+    
+    console.log('Alumno eliminado con id:', id);
+
+    await cargarAlumnos();
+  } catch (errr) {
+    console.error('Error al eliminar el alumno:', errr);
+    swal.fire({
+      icon: 'error',
+      title: 'Error al eliminar el alumno',
+      text: 'No se pudo eliminar el alumno.',
+      showConfirmButton: true,
+    });
+  }
+}
 
 onMounted(cargarAlumnos);
+
+
+
+
+
 </script>
 
 <template>
