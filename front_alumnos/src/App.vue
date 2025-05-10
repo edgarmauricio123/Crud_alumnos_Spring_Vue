@@ -11,6 +11,7 @@ const nuevoAlumno = ref({
   imagenURL: ''
 });
 
+const editado = ref(false);
 
 const cargarAlumnos = async () => {
   const response = await axios.get('http://localhost:8080/alumnos/traer-alumnos')
@@ -18,7 +19,13 @@ const cargarAlumnos = async () => {
   console.log(alumnos.value);
 }
 const agregarAlumno = async () => {
-  await axios.post('http://localhost:8080/alumnos/insertar-alumnos', nuevoAlumno.value)
+  if (editado.value) {
+    await axios.put(`http://localhost:8080/alumnos/editar-alumno/${nuevoAlumno.value.id}`, nuevoAlumno.value);
+    // editado.value = false
+  } else {
+    await axios.post('http://localhost:8080/alumnos/insertar-alumnos', nuevoAlumno.value)
+
+  }
   await cargarAlumnos();
   nuevoAlumno.value = {
     nombre: '',
@@ -28,6 +35,20 @@ const agregarAlumno = async () => {
     imagenURL: ''
   };
 }
+
+const editarAlumnos = (alumno) => {
+  Object.assign(nuevoAlumno.value, alumno)
+  editado.value = true
+}
+
+const eliminarAlumno = async (id) => {
+  await // Si el ID se pasa en la URL
+    axios.delete(`http://localhost:8080/alumnos/eliminar-alumno/${id}`);
+  console.log('Alumno eliminado con id:', id);
+
+  await cargarAlumnos();
+}
+
 
 onMounted(cargarAlumnos);
 </script>
@@ -54,14 +75,16 @@ onMounted(cargarAlumnos);
               </div>
               <div class="col-md-6 mb-3">
                 <label for="telefono" class="form-label">Telefono</label>
-                <input type="text" class="form-control" id="telefono" v-model="nuevoAlumno.telefono" required>
+                <input type="number" class="form-control" id="telefono" v-model="nuevoAlumno.telefono" required>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="imagenURL" class="form-label">Imagen URL</label>
                 <input type="text" class="form-control" id="imagenURL" v-model="nuevoAlumno.imagenURL" required>
               </div>
             </div>
-            <button type="submit" class="btn btn-primary">Agregar Alumno</button>
+            <button type="submit" class="btn btn-primary">
+              {{ editado ? 'Actualizar Alumno' : 'Agregar Alumno' }}
+            </button>
           </form>
         </div>
       </div>
@@ -91,8 +114,10 @@ onMounted(cargarAlumnos);
                   <td>{{ alumno.carrera }}</td>
                   <td>{{ alumno.telefono }}</td>
                   <td><img :src="alumno.Imagen" alt="Imagen de Alumno" width="50"></td>
-                  <td><button class="btn btn-danger mx-2"><i class="bi bi-trash2"></i></button></td>
-                  <td><button class="btn btn-warning"><i class="bi bi-pencil-fill"></i></button></td>
+                  <td><button @click=eliminarAlumno(alumno.id) class="btn btn-danger mx-2"><i
+                        class="bi bi-trash2"></i></button></td>
+                  <td><button @click=editarAlumnos(alumno) class="btn btn-warning">
+                      <i class="bi bi-pencil-fill"></i></button></td>
 
                 </tr>
               </tbody>
