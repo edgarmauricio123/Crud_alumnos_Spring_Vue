@@ -21,7 +21,12 @@ const cargarAlumnos = async () => {
 const agregarAlumno = async () => {
   if (editado.value) {
     await axios.put(`http://localhost:8080/alumnos/editar-alumno/${nuevoAlumno.value.id}`, nuevoAlumno.value);
-    // editado.value = false
+    editado.value = false
+    swal.fire({
+      icon: 'success',
+      title: 'Alumno editado correctamente',
+      timer: 1500
+    });
   } else {
     await axios.post('http://localhost:8080/alumnos/insertar-alumnos', nuevoAlumno.value)
     swal.fire({
@@ -43,6 +48,7 @@ const agregarAlumno = async () => {
 const editarAlumnos = (alumno) => {
   Object.assign(nuevoAlumno.value, alumno)
   editado.value = true
+  
 }
 
 const eliminarAlumno = async (id) => {
@@ -95,35 +101,39 @@ onMounted(cargarAlumnos);
 </script>
 
 <template>
+  <br><br><br><br><br>
   <div class="container">
-    <div class="row">
+    <div style="color: #a4ffff;" class="row">
       <div class="col-md-12">
-        <div class="card shadow p-4 mb-4">
+        <div  class="card shadow p-4 mb-4">
+          <div style="background-color: #e0daf7;" class="card">
           <h2 class="text-center">Formulario alumnos</h2>
+          </div>
+          <br>
           <form @submit.prevent="agregarAlumno">
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="nombre" v-model="nuevoAlumno.nombre" required>
+                <input style="background-color: #f2ffff; " type="text" class="form-control " id="nombre" v-model="nuevoAlumno.nombre" required>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="apellido" class="form-label">Apellidos</label>
-                <input type="text" class="form-control" id="apellido" v-model="nuevoAlumno.apellido" required>
+                <input style="background-color: #f2ffff; " type="text" class="form-control" id="apellido" v-model="nuevoAlumno.apellido" required>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="carrera" class="form-label">Carrera</label>
-                <input type="text" class="form-control" id="carrera" v-model="nuevoAlumno.carrera" required>
+                <input style="background-color: #f2ffff; " type="text" class="form-control" id="carrera" v-model="nuevoAlumno.carrera" required>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="telefono" class="form-label">Telefono</label>
-                <input type="number" class="form-control" id="telefono" v-model="nuevoAlumno.telefono" required>
+                <input style="background-color: #f2ffff; " type="number" class="form-control" id="telefono" v-model="nuevoAlumno.telefono" required>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="imagenURL" class="form-label">Imagen URL</label>
-                <input type="text" class="form-control" id="imagenURL" v-model="nuevoAlumno.imagenURL" required>
+                <input style="background-color: #f2ffff; " type="text" class="form-control" id="imagenURL" v-model="nuevoAlumno.imagenURL" required>
               </div>
             </div>
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary ">
               {{ editado ? 'Actualizar Alumno' : 'Agregar Alumno' }}
             </button>
           </form>
@@ -133,10 +143,14 @@ onMounted(cargarAlumnos);
       <div class="cold-md-12">
         <div class="card shadow">
           <div class="card body">
-            <h5 class="card-title mb-3">Tabla de alumnos</h5>
+            <br>
+            
+            <h4 class="card-title mb-3 text-center">Tabla de alumnos</h4>
+            <div class="container border">
+
             <table class="table table-hover align-middle">
-              <thead class="table-light">
-                <tr>
+              <thead  class="table-success">
+                <tr >
                   <th scope="col"> Id</th>
                   <th scope="col">Nombre</th>
                   <th scope="col">Apellidos</th>
@@ -149,20 +163,21 @@ onMounted(cargarAlumnos);
               </thead>
               <tbody>
                 <tr v-for="alumno in alumnos" :key="alumno.Id">
-                  <td>{{ alumno.id }}</td>
-                  <td>{{ alumno.nombre }}</td>
-                  <td>{{ alumno.apellidos }}</td>
-                  <td>{{ alumno.carrera }}</td>
-                  <td>{{ alumno.telefono }}</td>
-                  <td><img :src="alumno.Imagen" alt="Imagen de Alumno" width="50"></td>
-                  <td><button @click=eliminarAlumno(alumno.id) class="btn btn-danger mx-2"><i
-                        class="bi bi-trash2"></i></button></td>
-                  <td><button @click=editarAlumnos(alumno) class="btn btn-warning">
+                  <td >{{ alumno.id }}</td>
+                  <td >{{ alumno.nombre }}</td>
+                  <td >{{ alumno.apellido }}</td>
+                  <td >{{ alumno.carrera }}</td>
+                  <td >{{ alumno.telefono }}</td>
+                  <td ><img :src="alumno.Imagen" alt="Imagen de Alumno" width="50"></td>
+                  <td ><button @click=eliminarAlumno(alumno.id) class="btn btn-danger mx-2"><i
+                        class="bi bi-trash2"></i></button>
+                      <button @click=editarAlumnos(alumno) class="btn btn-warning">
                       <i class="bi bi-pencil-fill"></i></button></td>
-
+                 
                 </tr>
               </tbody>
             </table>
+            </div>
           </div>
         </div>
 
@@ -171,5 +186,12 @@ onMounted(cargarAlumnos);
 
   </div>
 </template>
-z
-<style scoped></style>
+
+<style scoped>
+h4{
+font-family: Georgia, 'Times New Roman', Times, serif;
+}
+.border{
+  container: 10;
+}
+</style>
