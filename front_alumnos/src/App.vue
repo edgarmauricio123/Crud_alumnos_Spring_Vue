@@ -185,6 +185,7 @@ onMounted(cargarAlumnos);
     </div>
 
   </div>
+  <br><br><br><br><br><br><br><br>
 </template>
 
 <style scoped>
@@ -194,4 +195,9 @@ font-family: Georgia, 'Times New Roman', Times, serif;
 .border{
   container: 10;
 }
+h2{
+font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+
 </style>
