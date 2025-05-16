@@ -151,7 +151,7 @@ onMounted(cargarAlumnos);
                 <tr v-for="alumno in alumnos" :key="alumno.Id">
                   <td>{{ alumno.id }}</td>
                   <td>{{ alumno.nombre }}</td>
-                  <td>{{ alumno.apellidos }}</td>
+                  <td>{{ alumno.apellido }}</td>
                   <td>{{ alumno.carrera }}</td>
                   <td>{{ alumno.telefono }}</td>
                   <td><img :src="alumno.Imagen" alt="Imagen de Alumno" width="50"></td>

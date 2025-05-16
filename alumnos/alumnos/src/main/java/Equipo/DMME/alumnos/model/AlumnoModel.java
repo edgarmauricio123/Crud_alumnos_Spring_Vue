@@ -11,7 +11,6 @@ public class AlumnoModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private  String NumeroControl;
     private String nombre;
     private String apellido;
     private String telefono;
