@@ -175,6 +175,20 @@ onMounted(cargarAlumnos);
                     <td>{{ alumno.telefono }}</td>
                     <td><img :src="alumno.Imagen" alt="Imagen de Alumno" width="50"></td>
                     <td><button @click=eliminarAlumno(alumno.id) class="btn btn-danger mx-2"><i
+                          class="bi bi-trash2"></i></button></td>
+                    <td><button @click=editarAlumnos(alumno) class="btn btn-warning">
+                        <i class="bi bi-pencil-fill"></i></button></td>
+                  </tr>
+                  </thead>
+                <tbody>
+                  <tr v-for="alumno in alumnos" :key="alumno.Id">
+                    <td>{{ alumno.id }}</td>
+                    <td>{{ alumno.nombre }}</td>
+                    <td>{{ alumno.apellido }}</td>
+                    <td>{{ alumno.carrera }}</td>
+                    <td>{{ alumno.telefono }}</td>
+                    <td><img :src="alumno.Imagen" alt="Imagen de Alumno" width="50"></td>
+                    <td><button @click=eliminarAlumno(alumno.id) class="btn btn-danger mx-2"><i
                           class="bi bi-trash2"></i></button>
                       <button @click=editarAlumnos(alumno) class="btn btn-warning">
                         <i class="bi bi-pencil-fill"></i></button>
