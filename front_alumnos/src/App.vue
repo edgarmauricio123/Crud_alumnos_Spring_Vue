@@ -194,7 +194,7 @@ onMounted(cargarAlumnos);
   <br><br><br><br><br><br><br><br>
 </template>
 
-<style>
+<style scoped>
 h4 {
   font-family: Georgia, 'Times New Roman', Times, serif;
 }
